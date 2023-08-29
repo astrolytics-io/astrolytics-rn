@@ -4,23 +4,20 @@ import { getDeviceInfo } from './device';
 import { isDevMode, cleanEvent, generateNumId, ExtendedWebSocket } from './utils';
 import defaults from './config';
 import Logger from './logger';
-import type { Options, ServerACK, HeartbeatEvent, NucleusEvent, Store } from './types';
+import type { Options, ServerACK, HeartbeatEvent, AstrolyticsEvent, Store } from './types';
 import buildStore from './store';
 
-console.warn('[Nucleus] Nucleus is now named Astrolytics. Please add the new package "astrolytics-rn" instead of this one, or go to www.astrolytics.io for more information.'
- + ' This package will no longer receive updates.');
-
 // eslint-disable-next-line no-use-before-define
-let client: Nucleus | null = null;
+let client: Astrolytics | null = null;
 
-export default class Nucleus {
+export default class Astrolytics {
   public static init(appId: string, options: Partial<Options> = {}) {
-    client = new Nucleus(appId, options);
+    client = new Astrolytics(appId, options);
   }
 
   public static track(
-    name: NucleusEvent['name'],
-    payload: NucleusEvent['payload'],
+    name: AstrolyticsEvent['name'],
+    payload: AstrolyticsEvent['payload'],
   ) {
     this.getClient()?.track(name, payload);
   }
@@ -66,7 +63,7 @@ export default class Nucleus {
   constructor(appId: string, options: Partial<Options> = {}) {
     if (!appId) {
       // eslint-disable-next-line no-console
-      console.error('Nucleus: You must provide an appId');
+      console.error('Astrolytics: You must provide an appId');
       return;
     }
 
@@ -126,10 +123,10 @@ export default class Nucleus {
     this.isReady = true;
   }
 
-  private static getClient(): Nucleus | null {
+  private static getClient(): Astrolytics | null {
     if (!client) {
       // eslint-disable-next-line no-console
-      console.error('Nucleus: You must initialize the client first');
+      console.error('Astrolytics: You must initialize the client first');
       return null;
     }
 
@@ -188,15 +185,15 @@ export default class Nucleus {
 
       // empty queue
       this.stored.queue = this.stored.queue
-        .filter((event): event is NucleusEvent => event.type !== 'heartbeat')
+        .filter((event): event is AstrolyticsEvent => event.type !== 'heartbeat')
         .filter((e) => !data.reportedIds.includes(e.id));
     }
   }
 
   private track(
-    name: NucleusEvent['name'],
-    payload: NucleusEvent['payload'],
-    type: NucleusEvent['type'] = 'event',
+    name: AstrolyticsEvent['name'],
+    payload: AstrolyticsEvent['payload'],
+    type: AstrolyticsEvent['type'] = 'event',
   ) {
     if (
       (!name && !type)
@@ -218,7 +215,7 @@ export default class Nucleus {
     const { platform, locale, deviceId } = this.stored.device;
     const { sessionId, userId, anonId, props } = this.stored;
 
-    const event: NucleusEvent | HeartbeatEvent = {
+    const event: AstrolyticsEvent | HeartbeatEvent = {
       type,
       name,
       id: tempId,
@@ -252,7 +249,7 @@ export default class Nucleus {
 
   private setUserId(newId: string | undefined) {
     if (!newId || newId.trim() === '') {
-      console.error('Nucleus: userId cannot be empty');
+      console.error('Astrolytics: userId cannot be empty');
       return;
     }
 
@@ -295,7 +292,7 @@ export default class Nucleus {
 
     Logger.log(`viewing screen ${name}`);
 
-    this.track(name, params, 'nucleus:view');
+    this.track(name, params, '$pageview');
     this.lastTrackedPath = name;
   }
 
@@ -326,17 +323,17 @@ export default class Nucleus {
       // just if we have more than 1 event, otherwise it might be the heartbeat
       Logger.log(`removing heartbeat events from queue. Queue length: ${this.stored.queue.length}`);
       this.stored.queue = this.stored.queue
-        .filter((event): event is NucleusEvent => event.type !== 'heartbeat')
+        .filter((event): event is AstrolyticsEvent => event.type !== 'heartbeat')
         .filter((event) => event.date > Date.now() - this.config.cutoff);
       Logger.log(`new queue length: ${this.stored.queue.length}`);
     }
 
-    const events: (NucleusEvent | HeartbeatEvent)[] = this.stored.queue.map((event) => {
+    const events: (AstrolyticsEvent | HeartbeatEvent)[] = this.stored.queue.map((event) => {
       if (event.type === 'heartbeat') {
         return event;
       }
 
-      return cleanEvent(event as NucleusEvent);
+      return cleanEvent(event as AstrolyticsEvent);
     });
 
     Logger.log('sending events [\n'

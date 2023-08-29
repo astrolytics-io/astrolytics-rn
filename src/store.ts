@@ -50,7 +50,7 @@ export default async function buildStore(): Promise<Store> {
       const storageType = storageKeys[prop];
       const storage = storageType === 'session' ? safeSessionStorage : safeLocalStorage;
 
-      const storageValue = storage.getItem(`nucleus-${String(prop)}`);
+      const storageValue = storage.getItem(`astrolytics-${String(prop)}`);
       if (storageValue !== null && typeof storageValue === 'string') {
         const parsedValue = JSON.parse(storageValue);
         // @ts-expect-error: this is fine
@@ -66,7 +66,7 @@ export default async function buildStore(): Promise<Store> {
 
       // @ts-expect-error: this is fine
       target[prop] = value;
-      storage.setItem(`nucleus-${String(prop)}`, JSON.stringify(value));
+      storage.setItem(`astrolytics-${String(prop)}`, JSON.stringify(value));
       return true;
     },
   });

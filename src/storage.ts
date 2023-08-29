@@ -75,5 +75,5 @@ class AsyncStorageJSONWrapper implements JSONStorage {
   }
 }
 
-export const safeLocalStorage: JSONStorage = new AsyncStorageJSONWrapper('nucleus-');
+export const safeLocalStorage: JSONStorage = new AsyncStorageJSONWrapper('astrolytics-');
 export const safeSessionStorage: JSONStorage = new InMemoryJSONStorage();

@@ -1,15 +1,15 @@
 {
-  "name": "nucleus-rn",
-  "version": "1.0.3",
+  "name": "astrolytics-rn",
+  "version": "1.0.0",
   "main": "./dist/bundle.cjs.js",
   "module": "./dist/bundle.esm.js",
   "types": "./dist/types/index.d.ts",
   "type": "module",
   "license": "MIT",
-  "homepage": "https://www.nucleus.sh",
+  "homepage": "https://www.astrolytics.io",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nucleus-sh/nucleus-rn.git"
+    "url": "https://github.com/astrolytics-io/astrolytics-rn.git"
   },
   "files": [
     "dist"
@@ -17,7 +17,7 @@
   "scripts": {
     "build": "rollup -c",
     "watch": "nodemon -w src -e ts,js --exec 'yarn build-dev'",
-    "watch-expo-rn": "nodemon -w . -e js,json,ts --ignore dist/ --exec 'yarn build-dev && rsync -av --exclude=\"node_modules\" . ./playground/expo-rn/node_modules/nucleus-rn/ && echo Synced!'",
+    "watch-expo-rn": "nodemon -w . -e js,json,ts --ignore dist/ --exec 'yarn build-dev && rsync -av --exclude=\"node_modules\" . ./playground/expo-rn/node_modules/astrolytics-rn/ && echo Synced!'",
     "build-dev": "BUILD_DEV=true rollup -c"
   },
   "devDependencies": {

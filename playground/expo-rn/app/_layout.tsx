@@ -1,4 +1,4 @@
-import Nucleus from 'nucleus-rn';
+import Astrolytics from 'astrolytics-rn';
 import { DarkTheme, DefaultTheme, ThemeProvider, useNavigationState } from '@react-navigation/native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 
 const APP_ID = '64bff3b8636801ac71d3f823';
-Nucleus.init(APP_ID, {
+Astrolytics.init(APP_ID, {
   debug: true,
   reportInterval: 1000 * 4,
   endpoint: 'ws://localhost:3002',
@@ -72,9 +72,9 @@ function RootLayoutNav() {
   useEffect(() => {
     // NOTE: we don't want to track the initial route when the user opens the page.
     // if you do want to track it, make sure the SDK is properly initialized before:
-    // if (Nucleus.isReady) {
+    // if (Astrolytics.isReady) {
     if (routeName !== 'index') {
-      Nucleus.page(routeName);
+      Astrolytics.page(routeName);
     }
   }, [routeName]);
 

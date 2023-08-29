@@ -1,22 +1,8 @@
 import { StyleSheet, Button } from 'react-native';
-import Nucleus from 'nucleus-rn';
+import Astrolytics from 'astrolytics-rn';
 
 import EditScreenInfo from '../../components/EditScreenInfo';
 import { Text, View } from '../../components/Themed';
-
-export default function TabOneScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-      <Button
-        title="Track event"
-        onPress={() => Nucleus.track('event', { name: 'test' })}
-     />
-    </View>
-  );
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -34,3 +20,17 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+
+export default function TabOneScreen() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Tab One</Text>
+      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <Button
+        title="Track event"
+        onPress={() => Astrolytics.track('event', { name: 'test' })}
+     />
+    </View>
+  );
+}

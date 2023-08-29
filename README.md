@@ -1,6 +1,6 @@
-# Nucleus.sh React Native SDK
+# Astrolytics.io React Native SDK
 
-![Nucleus.sh](https://intriguing-lemonade-efa.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F98020d0c-fd01-43ff-a29e-8f1c8f30de4b%2Fmsdncsmcnsm.jpg?table=block&id=db0f27a3-321c-400e-9ca7-db0213d1dee1)
+![Astrolytics.io](https://intriguing-lemonade-efa.notion.site/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F98020d0c-fd01-43ff-a29e-8f1c8f30de4b%2Fmsdncsmcnsm.jpg?table=block&id=db0f27a3-321c-400e-9ca7-db0213d1dee1)
 
 ## Table of Contents
 
@@ -10,7 +10,7 @@
 
 ## Getting Started
 
-To get started with Nucleus, create an account at [Nucleus](https://dash.nucleus.sh/login) and grab the App ID, then
+To get started with Astrolytics, create an account at [Astrolytics](https://dash.astrolytics.io/login) and grab the App ID, then
 use the SDK to start tracking events.
 
 ### Installation
@@ -21,40 +21,40 @@ This package has `@react-native-async-storage/async-storage` and `@react-native-
 yarn add @react-native-async-storage/async-storage @react-native-community/netinfo
 ```
 
-then proceed to install `nucleus-rn` As NPM package (recommended)
+then proceed to install `astrolytics-rn` As NPM package (recommended)
 
 ```bash
 # with yarn
-yarn add nucleus-rn
+yarn add astrolytics-rn
 ```
 
 ### Usage
 
 
 ```javascript
-import Nucleus from 'nucleus-rn';
+import Astrolytics from 'astrolytics-rn';
 
-Nucleus.init('YOUR_APP_ID');
+Astrolytics.init('YOUR_APP_ID');
 ```
 
-Replace `'YOUR_APP_ID'` with the unique ID of your app. You can get it [here](https://dash.nucleus.sh/account).
+Replace `'YOUR_APP_ID'` with the unique ID of your app. You can get it [here](https://dash.astrolytics.io/account).
 
 You can check examples with different frameworks [here](./playground).
 
 ## API
 
-Nucleus supports passing the following options as second argument to the `Nucleus.init()` method:
+Astrolytics supports passing the following options as second argument to the `Astrolytics.init()` method:
 
 ```js
-Nucleus.init('APP_ID', {
+Astrolytics.init('APP_ID', {
   appVersion: '0.0.0', // the version of your application
-  endpoint: 'wss://app.nucleus.sh', // only option, we don't allow self hosting yet :(
+  endpoint: 'wss://app.astrolytics.io', // only option, we don't allow self hosting yet :(
   disableInDev: true, // disable in development mode. We recommend not to call
                       // `init` method, as that will be more reliable.
   debug: false, // if set to `true`, will log a bunch of things.
-  disableTracking: false, // will not track anything. You can also use `Nucleus.disableTracking()`.
+  disableTracking: false, // will not track anything. You can also use `Astrolytics.disableTracking()`.
                           // note that some events will still be added to the queue, so if you call
-                          // Nucleus.enableTracking() again, they will be sent to the server.
+                          // Astrolytics.enableTracking() again, they will be sent to the server.
   reportInterval: 2 * 1000, // at which interval the events are sent to the server.
   sessionTimeout: 60 * 30 * 1000, // time after which the session is ended
   cutoff: 60 * 60 * 48 * 1000, // time after which event that were not sent yet are deleted
@@ -67,7 +67,7 @@ Nucleus.init('APP_ID', {
 Track events with optional custom data
 
 ```javascript
-Nucleus.track("click", { foo: 'bar' });
+Astrolytics.track("click", { foo: 'bar' });
 ```
 
 ### Error Tracking
@@ -75,24 +75,24 @@ Nucleus.track("click", { foo: 'bar' });
 Track errors with a name and the Error object.
 
 ```javascript
-Nucleus.trackError(name, error);
+Astrolytics.trackError(name, error);
 ```
 
-By default Nucleus registers a handler for `ErrorUtils.setGlobalHandler` that sends `'GlobalError'` errors to the API. If you want
+By default Astrolytics registers a handler for `ErrorUtils.setGlobalHandler` that sends `'GlobalError'` errors to the API. If you want
 to disable this behaviour, you can set `disableErrorReports` to `true`:
 
 ```js
-Nucleus.init('APP_ID', { disableErrorReports: true })
+Astrolytics.init('APP_ID', { disableErrorReports: true })
 ```
 
-and catch errors manually using `Nucleus.trackError('an error', errObject)`.
+and catch errors manually using `Astrolytics.trackError('an error', errObject)`.
 
 ### User Identification
 
 Identify a user by a unique ID and optionally set custom properties.
 
 ```javascript
-Nucleus.identify('04f8846d-ecca-4a81-8740-f6428ceb7f7b', { firstName: 'Jordan', lastName: 'Walke' });
+Astrolytics.identify('04f8846d-ecca-4a81-8740-f6428ceb7f7b', { firstName: 'Jordan', lastName: 'Walke' });
 ```
 
 ### Screen Tracking
@@ -100,7 +100,7 @@ Nucleus.identify('04f8846d-ecca-4a81-8740-f6428ceb7f7b', { firstName: 'Jordan', 
 Track screen views with the screen name and optional parameters.
 
 ```javascript
-Nucleus.page('/about', { foo: 'baz' });
+Astrolytics.page('/about', { foo: 'baz' });
 ```
 
 ### Disabling Tracking
@@ -108,7 +108,7 @@ Nucleus.page('/about', { foo: 'baz' });
 To disable tracking
 
 ```javascript
-Nucleus.disableTracking();
+Astrolytics.disableTracking();
 ```
 
 ### Enabling Tracking
@@ -116,7 +116,7 @@ Nucleus.disableTracking();
 To enable tracking
 
 ```javascript
-Nucleus.enableTracking();
+Astrolytics.enableTracking();
 ```
 
 ## How to Contribute
@@ -124,5 +124,5 @@ Nucleus.enableTracking();
 We're always looking for contributions from the community. Here's how you can help:
 
 1. **Report Bugs**: Create an issue report detailing the bug you've found.
-2. **Suggest Features**: Have a great idea for Nucleus? Don't hesitate to put it forward by creating an issue.
+2. **Suggest Features**: Have a great idea for Astrolytics? Don't hesitate to put it forward by creating an issue.
 3. **Submit Pull Requests**: Feel free to fix a bug or add a new feature and create a pull request. Make sure to follow the existing code style, and write clear commit messages explaining your changes.
